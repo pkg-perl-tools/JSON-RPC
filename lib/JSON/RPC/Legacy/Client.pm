@@ -107,6 +107,9 @@ sub call {
 
     $self->status_line($result->status_line);
 
+    # If the server returned an error, we have no JSON.
+    return if ($result->code >= 500 && $result->code < 600);
+
     return unless($result->content); # notification?
 
     if ($service) {
